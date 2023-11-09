@@ -20,6 +20,7 @@ use Http\Message\MessageFactory;
 use Http\Discovery\MessageFactoryDiscovery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -28,7 +29,7 @@ use Psr\Http\Message\RequestInterface;
 abstract class AbstractHttpProvider extends AbstractProvider
 {
     /**
-     * @var ClientInterface
+     * @var HttpClient
      */
     private $client;
 
@@ -38,10 +39,10 @@ abstract class AbstractHttpProvider extends AbstractProvider
     private $messageFactory;
 
     /**
-     * @param ClientInterface     $client
+     * @param HttpClient     $client
      * @param MessageFactory|null $factory
      */
-    public function __construct(ClientInterface $client, MessageFactory $factory = null)
+    public function __construct(HttpClient $client, MessageFactory $factory = null)
     {
         $this->client = $client;
         $this->messageFactory = $factory ?: MessageFactoryDiscovery::find();
@@ -106,9 +107,9 @@ abstract class AbstractHttpProvider extends AbstractProvider
     /**
      * Returns the HTTP adapter.
      *
-     * @return ClientInterface
+     * @return HttpClient
      */
-    protected function getHttpClient(): ClientInterface
+    protected function getHttpClient(): HttpClient
     {
         return $this->client;
     }
